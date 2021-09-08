@@ -1,7 +1,12 @@
 import UIKit
 
 public protocol UserPreferencesProtocol: AnyObject {
+    #if TESTING
+    var _preferredContentSizeCategory: UIContentSizeCategory? { get }
+    var preferredContentSizeCategory: UIContentSizeCategory { get set }
+    #else
     var preferredContentSizeCategory: UIContentSizeCategory { get }
+    #endif
     var contentSizeScale: CGFloat { get }
 }
 
@@ -12,9 +17,21 @@ public class UserPreferences: UserPreferencesProtocol {
         return UserPreferences()
     }()
     
+    #if TESTING
+    public var _preferredContentSizeCategory: UIContentSizeCategory?
+    public var preferredContentSizeCategory: UIContentSizeCategory {
+        set {
+            _preferredContentSizeCategory = newValue
+        }
+        get {
+            return _preferredContentSizeCategory ?? UIApplication.shared.preferredContentSizeCategory
+        }
+    }
+    #else
     public var preferredContentSizeCategory: UIContentSizeCategory {
         return UIApplication.shared.preferredContentSizeCategory
     }
+    #endif
 }
 
 public extension UserPreferencesProtocol {
