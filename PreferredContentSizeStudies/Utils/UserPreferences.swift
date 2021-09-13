@@ -2,7 +2,6 @@ import UIKit
 
 public protocol UserPreferencesProtocol: AnyObject {
     #if TESTING
-    var _preferredContentSizeCategory: UIContentSizeCategory? { get }
     var preferredContentSizeCategory: UIContentSizeCategory { get set }
     #else
     var preferredContentSizeCategory: UIContentSizeCategory { get }
@@ -18,7 +17,7 @@ public class UserPreferences: UserPreferencesProtocol {
     }()
     
     #if TESTING
-    public var _preferredContentSizeCategory: UIContentSizeCategory?
+    private var _preferredContentSizeCategory: UIContentSizeCategory?
     public var preferredContentSizeCategory: UIContentSizeCategory {
         set {
             _preferredContentSizeCategory = newValue
