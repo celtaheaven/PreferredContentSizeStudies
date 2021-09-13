@@ -3,9 +3,8 @@ import UIKit
 class ViewController: UIViewController {
     private let titleLabel: UILabel  = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
+        label.preferredContentSizeCategoryFont(with: .title1)
         label.textAlignment = .center
-        label.adjustsFontForContentSizeCategory = true
         label.text = "Hello World!"
         label.textColor = .black
         
@@ -16,10 +15,9 @@ class ViewController: UIViewController {
     
     private let bodyLabel: UILabel  = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.preferredContentSizeCategoryFont(with: .body)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.adjustsFontForContentSizeCategory = true
         label.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. "
         label.textColor = .blue
         
