@@ -11,6 +11,8 @@ public protocol UserPreferencesProtocol: AnyObject {
 public class UserPreferences: UserPreferencesProtocol {
     private init() { }
     
+    private let memoizedTraitCollection = memoize(UITraitCollection.init(preferredContentSizeCategory:))
+
     public static var shared: UserPreferences = {
         return UserPreferences()
     }()
@@ -18,11 +20,11 @@ public class UserPreferences: UserPreferencesProtocol {
     #if TESTING
     public var customContentSizeCategory: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory
     public var traitCollection: UITraitCollection {
-        return UITraitCollection(preferredContentSizeCategory: customContentSizeCategory)
+        return memoizedTraitCollection(customContentSizeCategory)
     }
     #else
     public var traitCollection: UITraitCollection {
-        return UITraitCollection(preferredContentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        return memoizedTraitCollection(UIApplication.shared.preferredContentSizeCategory)
     }
     #endif
 }
