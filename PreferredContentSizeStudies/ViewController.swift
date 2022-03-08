@@ -27,17 +27,19 @@ class ViewController: UIViewController {
     private var iconImageViewWidthConstraint: NSLayoutConstraint?
     private var iconImageViewHeightConstraint: NSLayoutConstraint?
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        titleLabel.preferredContentSizeCategoryFont(with: .headline)
+        bodyLabel.preferredContentSizeCategoryFont(with: .body)
+        setNonDynamicConstraints()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupLayout()
         setupAdditionalConfiguration()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        setNonDynamicConstraints()
     }
     
     private func setupLayout() {

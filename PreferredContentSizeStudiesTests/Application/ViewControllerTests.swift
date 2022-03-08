@@ -6,6 +6,7 @@ class ViewControllerTests: ScalableSnapshotsTestCase {
     override func setUp() {
         super.setUp()
         
+//        Snapshot tests are based of iPhone 11 Simulator
 //        recordMode = true
     }
     

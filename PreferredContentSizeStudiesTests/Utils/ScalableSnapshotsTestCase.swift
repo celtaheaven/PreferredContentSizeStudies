@@ -10,7 +10,9 @@ open class ScalableSnapshotsTestCase: FBSnapshotTestCase {
     
     func forEachStandardContentSizesCategories(_ closure: (UIContentSizeCategory)->()) {
         for contentSizeCategory in standardContentSizeCategories {
+            #if TESTING
             UserPreferences.shared.customContentSizeCategory = contentSizeCategory
+            #endif
             closure(contentSizeCategory)
         }
     }
@@ -29,6 +31,8 @@ open class ScalableSnapshotsTestCase: FBSnapshotTestCase {
     
     open override func tearDown() {
         super.tearDown()
-        UserPreferences.shared.customContentSizeCategory = nil
+        #if TESTING
+        UserPreferences.shared.customContentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+        #endif
     }
 }
