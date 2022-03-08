@@ -2,7 +2,9 @@ import UIKit
 
 public protocol UserPreferencesProtocol: AnyObject {
     #if TESTING
-    var customContentSizeCategory: UIContentSizeCategory { get set }
+    var contentSizeCategory: UIContentSizeCategory { get set }
+    #else
+    var contentSizeCategory: UIContentSizeCategory { get }
     #endif
     var contentSizeScale: CGFloat { get }
     var traitCollection: UITraitCollection { get }
@@ -18,26 +20,25 @@ public class UserPreferences: UserPreferencesProtocol {
     }()
     
     #if TESTING
-    public var customContentSizeCategory: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory
-    public var traitCollection: UITraitCollection {
-        return memoizedTraitCollection(customContentSizeCategory)
+    private var _contentSizeCategory: UIContentSizeCategory = UIApplication.shared.preferredContentSizeCategory
+    public var contentSizeCategory: UIContentSizeCategory {
+        get { return _contentSizeCategory }
+        set { _contentSizeCategory = newValue }
     }
     #else
-    public var traitCollection: UITraitCollection {
-        return memoizedTraitCollection(UIApplication.shared.preferredContentSizeCategory)
+    public var contentSizeCategory: UIContentSizeCategory {
+        UIApplication.shared.preferredContentSizeCategory
     }
     #endif
+
+    public var traitCollection: UITraitCollection {
+        return memoizedTraitCollection(contentSizeCategory)
+    }
 }
 
 public extension UserPreferencesProtocol {
     var contentSizeScale: CGFloat {
-        #if TESTING
-        let preferredContentSizeCategory = customContentSizeCategory
-        #else
-        let preferredContentSizeCategory = UIApplication.shared.preferredContentSizeCategory
-        #endif
-        
-        switch preferredContentSizeCategory {
+        switch contentSizeCategory {
         case .extraSmall:
             return 0.7
         case .small:
